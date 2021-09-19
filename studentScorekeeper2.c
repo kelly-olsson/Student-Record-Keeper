@@ -1,9 +1,17 @@
+/*
+Description: Command line program to hold and 
+modify student records in
+a text file. 
+Name: Kelly Olsson
+Date: July 2021
+*/
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
 #include <stdlib.h>
 #define LINESIZE 1024
 
+/* Structure to hold student records */
 typedef struct record record;
 struct record {
     char id[LINESIZE];
@@ -18,6 +26,7 @@ void printRecords(FILE **filep, size_t size);
 void modifyRecord(record arr[], size_t size, int record);
 void writeRecord(FILE **filep, const char arr[], const int num);
 
+/* Program driver */
 int main(int argc, char*argv[]) 
 {
     char userChoice[LINESIZE];
@@ -29,11 +38,13 @@ int main(int argc, char*argv[])
     size_t arraySize = 0;
     FILE *fp;
 
+    /* User must enter a text file name and the program file name */
     if(argc > 1){
         if ( ( fp = fopen(argv[1], "wb+") ) == NULL) {
             printf("File could not be opened\n");
         } else {
-
+            
+            /* Displays user choices and obtains user's choice and validates it */
             while (finalChoice != -2) {
                 printMenu();
                 printf("Please type the number of your choice: ");
@@ -89,6 +100,7 @@ int main(int argc, char*argv[])
     return 0;
 }
 
+/* Displays user choices */
 void printMenu() 
 {
     puts("\nMenu of Options");
@@ -99,6 +111,7 @@ void printMenu()
     puts("");
 }
 
+/* Drives obtaining a new student ID and score */
 int getRecordInfo(char id[], int *scrPtr) 
 {
     int valid = -1;
@@ -135,6 +148,7 @@ int getRecordInfo(char id[], int *scrPtr)
     *scrPtr = finalScore;
 }
 
+/* Checks student ID to BCIT's ID standards */
 int validateID(const char arr[]) 
 {
     int i = 0;
@@ -158,6 +172,7 @@ int validateID(const char arr[])
     }
 }
 
+/* Checks if the score is within 0-100 */
 int validateScore(const char numArr[]) 
 {
     int temp;
@@ -177,6 +192,7 @@ int validateScore(const char numArr[])
     }
 }
 
+/* Prints the current stored student records */
 void printRecords(FILE **filep, size_t size) 
 {
     char arr[LINESIZE];
@@ -196,6 +212,7 @@ void printRecords(FILE **filep, size_t size)
     }
 }
 
+/* Writes student records to the desired text file */ 
 void writeRecord(FILE **filep, const char arr[], const int num)
 {
     record record1;
